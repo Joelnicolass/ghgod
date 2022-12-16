@@ -8,12 +8,3 @@ abstract class CardHandlerEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-
-class OnCardHandlerEvent_DirectionCard extends CardHandlerEvent {
-  final EDirectionCard directionCard;
-
-  const OnCardHandlerEvent_DirectionCard({required this.directionCard});
-
-  @override
-  List<Object> get props => [directionCard];
-}

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gh_god/features/card_handler/domain/direction_card.enum.dart';
+import 'package:gh_god/features/card/domain/entity/direction_card.enum.dart';
+import 'package:gh_god/features/card/ui/bloc/card_game_bloc.dart';
 import 'package:gh_god/features/card_handler/ui/bloc/card_handler_bloc.dart';
 
 class CardGH extends StatelessWidget {
@@ -9,16 +10,41 @@ class CardGH extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CardHandlerBloc, CardHandlerState>(
+    GlobalKey _key = GlobalKey();
+
+    return BlocBuilder<CardGameBloc, CardGameState>(
       builder: (_, state) {
-        return Container(
-          color: state.directionCard == EDirectionCard.none
-              ? Colors.red
-              : state.directionCard == EDirectionCard.right
-                  ? Colors.green
-                  : Colors.blue,
-          child: Center(
-            child: Text(state.directionCard.toString()),
+        return Listener(
+          onPointerMove: (event) {
+            RenderObject renderBox = _key.currentContext!.findRenderObject()!;
+            double rotation = renderBox.getTransformTo(null).getRotation()[1];
+
+            if (rotation > 0) {
+              context
+                  .read<CardGameBloc>()
+                  .add(const OnCardGameEvent_CardDirection(
+                    directionCard: EDirectionCard.right,
+                  ));
+            }
+
+            if (rotation < 0) {
+              context
+                  .read<CardGameBloc>()
+                  .add(const OnCardGameEvent_CardDirection(
+                    directionCard: EDirectionCard.left,
+                  ));
+            }
+          },
+          child: Container(
+            key: _key,
+            color: state.directionCard == EDirectionCard.none
+                ? Colors.red
+                : state.directionCard == EDirectionCard.right
+                    ? Colors.green
+                    : Colors.blue,
+            child: Center(
+              child: Text(state.directionCard.toString()),
+            ),
           ),
         );
       },

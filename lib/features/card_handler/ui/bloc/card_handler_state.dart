@@ -1,20 +1,12 @@
 part of 'card_handler_bloc.dart';
 
 class CardHandlerState extends Equatable {
-  final EDirectionCard directionCard;
+  const CardHandlerState();
 
-  const CardHandlerState({
-    this.directionCard = EDirectionCard.none,
-  });
-
-  CardHandlerState copyWith({
-    EDirectionCard? directionCard,
-  }) {
-    return CardHandlerState(
-      directionCard: directionCard ?? this.directionCard,
-    );
+  CardHandlerState copyWith() {
+    return CardHandlerState();
   }
 
   @override
-  List<Object> get props => [directionCard];
+  List<Object> get props => [];
 }
