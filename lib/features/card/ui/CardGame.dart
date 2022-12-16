@@ -35,19 +35,68 @@ class CardGH extends StatelessWidget {
                   ));
             }
           },
+          onPointerUp: (event) {
+            context
+                .read<CardGameBloc>()
+                .add(const OnCardGameEvent_CardDirection(
+                  directionCard: EDirectionCard.none,
+                ));
+          },
           child: Container(
-            key: _key,
-            color: state.directionCard == EDirectionCard.none
-                ? Colors.red
-                : state.directionCard == EDirectionCard.right
-                    ? Colors.green
-                    : Colors.blue,
-            child: Center(
-              child: Text(state.directionCard.toString()),
-            ),
-          ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+              ),
+              key: _key,
+              child: Column(
+                children: [
+                  HeaderCardGame(
+                    state: state,
+                  )
+                ],
+              )),
         );
       },
+    );
+  }
+}
+
+class HeaderCardGame extends StatelessWidget {
+  final CardGameState state;
+
+  const HeaderCardGame({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.12,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          state.directionCard == EDirectionCard.none
+              ? state.title
+              : state.directionCard == EDirectionCard.left
+                  ? state.leftText
+                  : state.rightText,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+      ),
     );
   }
 }

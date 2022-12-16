@@ -3,11 +3,11 @@ part of 'card_game_bloc.dart';
 class CardGameState extends Equatable {
   final EDirectionCard directionCard;
 
-  final String title = '';
-  final String description = '';
+  final String title = 'titulo';
+  final String description = 'descripcion';
   final String image = '';
-  final String leftText = '';
-  final String rightText = '';
+  final String leftText = 'decision izq';
+  final String rightText = 'decision der';
   final dynamic leftAction = '';
   final dynamic rightAction = '';
   final dynamic content = '';
