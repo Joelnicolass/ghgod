@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gh_god/features/card/di/getCard_di.dart';
+import 'package:gh_god/features/card/domain/entity/card.dart';
+import 'package:gh_god/features/card/ui/CardGame.dart';
+import 'package:gh_god/features/card_handler/domain/direction_card.enum.dart';
+import 'package:gh_god/features/card_handler/ui/bloc/card_handler_bloc.dart';
 import 'package:tcard/tcard.dart';
-
-generateCards(quantity) {
-  List<Widget> cards = [];
-
-  for (var i = 0; i < quantity; i++) {
-    cards.add(
-      Container(
-        decoration: BoxDecoration(
-          color: i % 2 == 0 ? Colors.red : Colors.blue,
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
-  return cards;
-}
 
 class CardHandler extends StatelessWidget {
   const CardHandler({super.key});
@@ -24,32 +14,50 @@ class CardHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = TCardController();
 
-    return Listener(
-      onPointerMove: (event) {
-        //right
-        if (event.delta.dx > 0) {
-          print('right');
-        }
+    return BlocBuilder<CardHandlerBloc, CardHandlerState>(
+      builder: (_, state) {
+        final EDirectionCard directionCard = state.directionCard;
 
-        //left
-        if (event.delta.dx < 0) {
-          print('left');
-        }
+        return Listener(
+          onPointerMove: (event) {
+            //right
+            if (event.delta.dx > 0) {
+              context.read<CardHandlerBloc>().add(
+                    const OnCardHandlerEvent_DirectionCard(
+                      directionCard: EDirectionCard.right,
+                    ),
+                  );
+            }
+
+            //left
+            if (event.delta.dx < 0) {
+              context.read<CardHandlerBloc>().add(
+                    const OnCardHandlerEvent_DirectionCard(
+                      directionCard: EDirectionCard.left,
+                    ),
+                  );
+            }
+          },
+          onPointerUp: (event) {
+            context.read<CardHandlerBloc>().add(
+                  const OnCardHandlerEvent_DirectionCard(
+                    directionCard: EDirectionCard.none,
+                  ),
+                );
+          },
+          child: TCard(
+            cards: [CardGH()],
+            controller: controller,
+            onForward: (index, info) {
+              print('adelante');
+            },
+            lockYAxis: true,
+            onEnd: () {
+              print('fin');
+            },
+          ),
+        );
       },
-      child: TCard(
-        cards: generateCards(10),
-        controller: controller,
-        onForward: (index, info) {
-          print('adelante');
-        },
-        onBack: (index, info) {
-          print('atras');
-        },
-        lockYAxis: true,
-        onEnd: () {
-          print('fin');
-        },
-      ),
     );
   }
 }
