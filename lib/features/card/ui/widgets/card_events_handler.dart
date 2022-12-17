@@ -24,6 +24,11 @@ class CardEventsHanlder extends StatelessWidget {
                   .add(const OnCardGameEvent_CardDirection(
                     directionCard: EDirectionCard.right,
                   ));
+
+              context.read<CardGameBloc>().add(const OnCardGameEvent_Selection(
+                  selection: EDirectionCard.right));
+
+              return;
             }
 
             if (rotation < 0) {
@@ -32,6 +37,11 @@ class CardEventsHanlder extends StatelessWidget {
                   .add(const OnCardGameEvent_CardDirection(
                     directionCard: EDirectionCard.left,
                   ));
+
+              context.read<CardGameBloc>().add(const OnCardGameEvent_Selection(
+                  selection: EDirectionCard.left));
+
+              return;
             }
           },
           onPointerUp: (event) {
@@ -40,6 +50,8 @@ class CardEventsHanlder extends StatelessWidget {
                 .add(const OnCardGameEvent_CardDirection(
                   directionCard: EDirectionCard.none,
                 ));
+
+            return;
           },
           child: CardLayout(keyWidget: _key, state: state),
         );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gh_god/features/card/ui/bloc/card_game_bloc.dart';
 import 'package:gh_god/features/card/ui/widgets/card_header.dart';
+import 'package:lottie/lottie.dart';
 
 class CardLayout extends StatelessWidget {
   final GlobalKey<State<StatefulWidget>> _key;
@@ -29,7 +30,16 @@ class CardLayout extends StatelessWidget {
             HeaderCardGame(
               state: state,
             ),
-            Container()
+            Expanded(
+              child: Lottie.asset(
+                'assets/lottie/question.json',
+                alignment: Alignment.center,
+                repeat: true,
+                reverse: true,
+                animate: true,
+                fit: BoxFit.contain,
+              ),
+            )
           ],
         ));
   }
