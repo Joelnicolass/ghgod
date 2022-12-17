@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gh_god/common/utils/screen.dart';
 import 'package:gh_god/core/providers/providers_handler.dart';
-import 'package:gh_god/features/card_handler/ui/card_handler.dart';
+import 'package:gh_god/features/card_swiper/ui/card_swiper.dart';
 
 void main() {
   runApp(MultiBlocProvider(
@@ -22,7 +22,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(body: Center(child: CardHandler())),
+      home: DebuggingWidget(),
     );
+  }
+}
+
+class DebuggingWidget extends StatelessWidget {
+  const DebuggingWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CardSwiper(),
+        ],
+      ),
+    ));
   }
 }

@@ -1,4 +1,4 @@
-import 'package:gh_god/features/card/domain/entity/card.dart';
+import 'package:gh_god/features/card/domain/entities/card.dart';
 import 'package:gh_god/features/card/domain/repositories/card_repository.dart';
 
 class GetCardUsecase {

@@ -19,3 +19,14 @@ class OnCardGameEvent_CardDirection extends CardGameEvent {
   @override
   List<Object> get props => [directionCard];
 }
+
+class OnCardGameEvent_Selection extends CardGameEvent {
+  final EDirectionCard selection;
+
+  const OnCardGameEvent_Selection({
+    required this.selection,
+  });
+
+  @override
+  List<Object> get props => [selection];
+}

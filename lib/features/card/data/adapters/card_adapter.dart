@@ -1,4 +1,4 @@
-import 'package:gh_god/features/card/domain/entity/card.dart';
+import 'package:gh_god/features/card/domain/entities/card.dart';
 
 class CardAdapter {
   static CardGame fromJson(Map<String, dynamic> cardInfo) {
