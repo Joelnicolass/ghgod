@@ -11,6 +11,9 @@ class CardAdapter {
       rightText: cardInfo['rightText'],
       leftAction: cardInfo['leftAction'],
       rightAction: cardInfo['rightAction'],
+      nextCardIdLeft: cardInfo['nextCardIdLeft'],
+      nextCardIdRight: cardInfo['nextCardIdRight'],
+      cardType: cardInfo['cardType'],
     );
   }
 }

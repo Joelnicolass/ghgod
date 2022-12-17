@@ -1,1 +1,10 @@
-enum ECardType { info, question, problem, success, custom }
+enum ECardType {
+  info,
+  question,
+  problem,
+  like,
+  battle,
+  discussion,
+  friend,
+  vote
+}
