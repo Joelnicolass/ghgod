@@ -17,32 +17,10 @@ class CardEventsHanlder extends StatelessWidget {
         return Listener(
           onPointerMove: (event) {
             final rotation = PositionWidget.getRotation(_key);
+            final direction = _evaluateDirection(rotation);
+            _blocEvents(context, direction, state.directionCard);
 
-            if (rotation > 0) {
-              context
-                  .read<CardGameBloc>()
-                  .add(const OnCardGameEvent_CardDirection(
-                    directionCard: EDirectionCard.right,
-                  ));
-
-              context.read<CardGameBloc>().add(const OnCardGameEvent_Selection(
-                  selection: EDirectionCard.right));
-
-              return;
-            }
-
-            if (rotation < 0) {
-              context
-                  .read<CardGameBloc>()
-                  .add(const OnCardGameEvent_CardDirection(
-                    directionCard: EDirectionCard.left,
-                  ));
-
-              context.read<CardGameBloc>().add(const OnCardGameEvent_Selection(
-                  selection: EDirectionCard.left));
-
-              return;
-            }
+            return;
           },
           onPointerUp: (event) {
             context
@@ -58,4 +36,33 @@ class CardEventsHanlder extends StatelessWidget {
       },
     );
   }
+}
+
+EDirectionCard _evaluateDirection(double rotation) {
+  if (rotation > 0) {
+    return EDirectionCard.right;
+  }
+
+  if (rotation < 0) {
+    return EDirectionCard.left;
+  }
+
+  return EDirectionCard.none;
+}
+
+void _blocEvents(BuildContext context, EDirectionCard direction,
+    EDirectionCard previousDirection) {
+  if (previousDirection == direction) {
+    return;
+  }
+
+  context.read<CardGameBloc>().add(OnCardGameEvent_CardDirection(
+        directionCard: direction,
+      ));
+
+  context
+      .read<CardGameBloc>()
+      .add(OnCardGameEvent_Selection(selection: direction));
+
+  return;
 }
